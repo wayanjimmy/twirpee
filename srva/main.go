@@ -31,6 +31,21 @@ func (s *Server) CallServiceA(ctx context.Context, req *protos.GetServiceAReques
 	return &resp, err
 }
 
+func corsMiddleware(h http.HandlerFunc) http.HandlerFunc {
+	return func(rw http.ResponseWriter, r *http.Request) {
+		rw.Header().Set("Access-Control-Allow-Origin", "*")
+		rw.Header().Set("Access-Control-Allow-Methods", "OPTIONS, GET, POST, PUT")
+		rw.Header().Set("Access-Control-Allow-Headers", "Content-Type, X-CSRF-Token")
+
+		if r.Method == "OPTIONS" {
+			rw.Write([]byte("allowed"))
+			return
+		}
+
+		h(rw, r)
+	}
+}
+
 func main() {
 	// TODO: Try another mux, such as labstack's echo
 
@@ -38,7 +53,7 @@ func main() {
 
 	mux := http.NewServeMux()
 
-	mux.Handle(twirpHandler.PathPrefix(), twirpHandler)
+	mux.HandleFunc(twirpHandler.PathPrefix(), corsMiddleware(twirpHandler.ServeHTTP))
 
 	http.ListenAndServe(":8080", mux)
 }

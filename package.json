@@ -1,0 +1,25 @@
+{
+  "name": "twirpee",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wayanjimmy/twirpee.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wayanjimmy/twirpee/issues"
+  },
+  "homepage": "https://github.com/wayanjimmy/twirpee#readme",
+  "description": "",
+  "dependencies": {
+    "@protobuf-ts/plugin": "^2.0.0-alpha.30",
+    "ts-proto": "^1.82.5",
+    "twirp-ts": "^2.3.5"
+  }
+}
