@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"fmt"
+	"net/http"
 
 	"github.com/wayanjimmy/twirpee/srva/protos"
 )
@@ -32,5 +32,13 @@ func (s *Server) CallServiceA(ctx context.Context, req *protos.GetServiceAReques
 }
 
 func main() {
-	fmt.Println("vim-go")
+	// TODO: Try another mux, such as labstack's echo
+
+	twirpHandler := protos.NewAServiceServer(&Server{})
+
+	mux := http.NewServeMux()
+
+	mux.Handle(twirpHandler.PathPrefix(), twirpHandler)
+
+	http.ListenAndServe(":8080", mux)
 }
